@@ -18,7 +18,7 @@
   <link rel="preload" href="fonts-inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="img-hero-bg.jpg?v=2" as="image">
   <script>document.documentElement.className = "js";</script>
-  <link rel="stylesheet" href="styles.css?v=43">
+  <link rel="stylesheet" href="styles.css?v=44">
 </head>
 <body>
       <!-- Cabeçalho -->
@@ -31,6 +31,7 @@
         <ul class="nav__list">
           <li><a class="nav__link is-active enter enter--down" href="#inicio" aria-current="page" style="--d: .18s">Início</a></li>
           <li><a class="nav__link enter enter--down" href="#servicos" style="--d: .24s">Serviços</a></li>
+          <li><a class="nav__link enter enter--down" href="#tipos" style="--d: .27s">Equipamentos</a></li>
           <li><a class="nav__link enter enter--down" href="#como-funciona" style="--d: .3s">Como funciona</a></li>
           <li><a class="nav__link enter enter--down" href="#sinais" style="--d: .36s">Sinais</a></li>
           <li><a class="nav__link enter enter--down" href="#duvidas" style="--d: .42s">Dúvidas</a></li>
@@ -54,6 +55,7 @@
       <nav aria-label="Navegação móvel">
         <a href="#inicio">Início</a>
         <a href="#servicos">Serviços</a>
+        <a href="#tipos">Equipamentos</a>
         <a href="#como-funciona">Como funciona</a>
         <a href="#sinais">Sinais</a>
         <a href="#duvidas">Dúvidas</a>
@@ -311,7 +313,7 @@
 
     <div class="solucoes__intro" data-reveal>
       <h2 class="solucoes__titulo">Soluções completas em ar-condicionado</h2>
-      <p class="solucoes__sub">Do projeto à manutenção, conte com a R22 em cada etapa.</p>
+      <p class="solucoes__sub">Instalação, higienização, conserto e venda em todas as marcas — do projeto à manutenção, conte com a R22 em cada etapa.</p>
       <ul class="atende">
         <li>Residencial</li>
         <li>Comercial</li>
@@ -365,6 +367,110 @@
         <span class="btn__divider" aria-hidden="true"></span>
         <span class="btn__label">Solicitar orçamento no WhatsApp</span>
       </a>
+    </div>
+  </section>
+
+  <section class="tipos" id="tipos" aria-label="Tipos de ar-condicionado que atendemos">
+    <div class="tipos__inner">
+      <header class="tipos__topo" data-reveal>
+        <p class="tipos__rotulo">Equipamentos</p>
+        <h2 class="tipos__titulo">Todos os tipos de ar-condicionado, em todas as marcas</h2>
+        <p class="tipos__sub">Instalação, higienização, manutenção, conserto e venda de aparelhos novos. Atendemos todas as marcas do mercado, do split de parede ao sistema VRF.</p>
+      </header>
+
+      <ul class="tipos__grade">
+        <li class="tipo" data-reveal style="--i: 0">
+          <span class="tipo__ico" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="8" width="24" height="9" rx="3"/>
+              <path d="M8 14h16M11 21c0 2-1 3-1 5M16 21c0 2-1 3-1 5M21 21c0 2-1 3-1 5"/>
+            </svg>
+          </span>
+          <h3 class="tipo__nome">Split de parede</h3>
+          <p class="tipo__texto">Hi-wall, o modelo mais comum em quartos e salas.</p>
+        </li>
+
+        <li class="tipo" data-reveal style="--i: 1">
+          <span class="tipo__ico" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="11" y="3" width="10" height="26" rx="3"/>
+              <path d="M14.5 8v16M17.5 8v16"/>
+            </svg>
+          </span>
+          <h3 class="tipo__nome">Piso-teto</h3>
+          <p class="tipo__texto">Para salas amplas, lojas e pé-direito alto.</p>
+        </li>
+
+        <li class="tipo" data-reveal style="--i: 2">
+          <span class="tipo__ico" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="4" width="24" height="24" rx="4"/>
+              <rect x="11" y="11" width="10" height="10" rx="2"/>
+              <path d="M16 4v7M16 21v7M4 16h7M21 16h7"/>
+            </svg>
+          </span>
+          <h3 class="tipo__nome">Cassete</h3>
+          <p class="tipo__texto">Quatro vias no forro, ideal para escritórios e lojas.</p>
+        </li>
+
+        <li class="tipo" data-reveal style="--i: 3">
+          <span class="tipo__ico" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="9" height="15" rx="2"/>
+              <rect x="17" y="3" width="12" height="5" rx="1.6"/>
+              <rect x="17" y="13" width="12" height="5" rx="1.6"/>
+              <rect x="17" y="23" width="12" height="5" rx="1.6"/>
+            </svg>
+          </span>
+          <h3 class="tipo__nome">Multi-split</h3>
+          <p class="tipo__texto">Uma condensadora atendendo vários ambientes.</p>
+        </li>
+
+        <li class="tipo" data-reveal style="--i: 4">
+          <span class="tipo__ico" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="9" width="26" height="13" rx="2"/>
+              <path d="M7 16h3M12 16h3M17 16h3M22 16h3"/>
+            </svg>
+          </span>
+          <h3 class="tipo__nome">Dutado</h3>
+          <p class="tipo__texto">Embutido no forro, climatiza o ambiente inteiro.</p>
+        </li>
+
+        <li class="tipo" data-reveal style="--i: 5">
+          <span class="tipo__ico" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="3" width="14" height="26" rx="2"/>
+              <path d="M13 8h2M17 8h2M13 13h2M17 13h2M13 18h2M17 18h2M13 23h2M17 23h2"/>
+            </svg>
+          </span>
+          <h3 class="tipo__nome">VRF e VRV</h3>
+          <p class="tipo__texto">Sistemas centrais para prédios e indústrias.</p>
+        </li>
+
+        <li class="tipo" data-reveal style="--i: 6">
+          <span class="tipo__ico" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="6" width="24" height="20" rx="2"/>
+              <path d="M4 13h24M10 19h12"/>
+            </svg>
+          </span>
+          <h3 class="tipo__nome">Janela</h3>
+          <p class="tipo__texto">Modelos de janela: limpeza, conserto e recarga.</p>
+        </li>
+
+        <li class="tipo tipo--cta" data-reveal style="--i: 7">
+          <span class="tipo__ico" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 26.5 8.4 20A10 10 0 1 1 12.6 24l-6.6 2.5Z"/>
+              <path d="M12.5 13.5c.7 3.2 2.8 5.3 6 6"/>
+            </svg>
+          </span>
+          <h3 class="tipo__nome">Outro modelo?</h3>
+          <p class="tipo__texto">Vendemos e consertamos todas as marcas e modelos.</p>
+          <a class="tipo__link" href="#contato" data-whatsapp>Falar no WhatsApp</a>
+        </li>
+      </ul>
     </div>
   </section>
 
@@ -560,16 +666,17 @@
   <section class="marcas" aria-label="Marcas parceiras">
     <div class="marcas__topo">
       <p class="marcas__rotulo">Marcas parceiras</p>
+      <p class="marcas__nota">Trabalhamos com todas as marcas do mercado — instalação, manutenção, conserto e venda de aparelhos novos.</p>
     </div>
     <div class="marcas__roleta">
       <div class="marcas__trilha">
         <ul class="marcas__grupo">
-          <li class="marca"><img src="img-marcas-lg.png?v=1" alt="LG" height="26" loading="lazy" decoding="async"></li>
-          <li class="marca"><img src="img-marcas-samsung.png?v=1" alt="Samsung" height="26" loading="lazy" decoding="async"></li>
           <li class="marca"><img src="img-marcas-daikin.png?v=1" alt="Daikin" height="26" loading="lazy" decoding="async"></li>
+          <li class="marca"><img src="img-marcas-lg.png?v=1" alt="LG" height="26" loading="lazy" decoding="async"></li>
+          <li class="marca"><img src="img-marcas-fujitsu.png?v=1" alt="Fujitsu" height="26" loading="lazy" decoding="async"></li>
+          <li class="marca"><img src="img-marcas-samsung.png?v=1" alt="Samsung" height="26" loading="lazy" decoding="async"></li>
           <li class="marca"><img src="img-marcas-midea.png?v=1" alt="Midea" height="26" loading="lazy" decoding="async"></li>
           <li class="marca"><img src="img-marcas-gree.png?v=1" alt="Gree" height="26" loading="lazy" decoding="async"></li>
-          <li class="marca"><img src="img-marcas-fujitsu.png?v=1" alt="Fujitsu" height="26" loading="lazy" decoding="async"></li>
           <li class="marca"><img src="img-marcas-carrier.png?v=1" alt="Carrier" height="26" loading="lazy" decoding="async"></li>
           <li class="marca"><img src="img-marcas-elgin.png?v=1" alt="Elgin" height="26" loading="lazy" decoding="async"></li>
           <li class="marca"><img src="img-marcas-consul.png?v=1" alt="Consul" height="26" loading="lazy" decoding="async"></li>
@@ -578,12 +685,12 @@
           <li class="marca"><img src="img-marcas-philco.png?v=1" alt="Philco" height="26" loading="lazy" decoding="async"></li>
         </ul>
         <ul class="marcas__grupo" aria-hidden="true">
-          <li class="marca"><img src="img-marcas-lg.png?v=1" alt="LG" height="26" loading="lazy" decoding="async"></li>
-          <li class="marca"><img src="img-marcas-samsung.png?v=1" alt="Samsung" height="26" loading="lazy" decoding="async"></li>
           <li class="marca"><img src="img-marcas-daikin.png?v=1" alt="Daikin" height="26" loading="lazy" decoding="async"></li>
+          <li class="marca"><img src="img-marcas-lg.png?v=1" alt="LG" height="26" loading="lazy" decoding="async"></li>
+          <li class="marca"><img src="img-marcas-fujitsu.png?v=1" alt="Fujitsu" height="26" loading="lazy" decoding="async"></li>
+          <li class="marca"><img src="img-marcas-samsung.png?v=1" alt="Samsung" height="26" loading="lazy" decoding="async"></li>
           <li class="marca"><img src="img-marcas-midea.png?v=1" alt="Midea" height="26" loading="lazy" decoding="async"></li>
           <li class="marca"><img src="img-marcas-gree.png?v=1" alt="Gree" height="26" loading="lazy" decoding="async"></li>
-          <li class="marca"><img src="img-marcas-fujitsu.png?v=1" alt="Fujitsu" height="26" loading="lazy" decoding="async"></li>
           <li class="marca"><img src="img-marcas-carrier.png?v=1" alt="Carrier" height="26" loading="lazy" decoding="async"></li>
           <li class="marca"><img src="img-marcas-elgin.png?v=1" alt="Elgin" height="26" loading="lazy" decoding="async"></li>
           <li class="marca"><img src="img-marcas-consul.png?v=1" alt="Consul" height="26" loading="lazy" decoding="async"></li>
@@ -728,7 +835,7 @@
             </button>
           </h3>
           <div class="faq__resposta" id="faq-5" role="region" aria-labelledby="faq-btn-5">
-            <p>A R22 trabalha com soluções como split, inverter, multisplit, central e VRF. Informe o modelo do seu equipamento para verificar o serviço adequado.</p>
+            <p>Sim. A R22 atende split de parede, piso-teto, cassete, multi-split, dutado, VRF/VRV e aparelhos de janela, de todas as marcas. Também vendemos equipamentos novos e consertamos qualquer modelo. Informe o modelo do seu aparelho para confirmar o serviço.</p>
           </div>
         </div>
       </div>
@@ -748,6 +855,7 @@
         <ul class="rodape__lista">
           <li><a class="rodape__link" href="#inicio">Início</a></li>
           <li><a class="rodape__link" href="#servicos">Serviços</a></li>
+          <li><a class="rodape__link" href="#tipos">Equipamentos</a></li>
           <li><a class="rodape__link" href="#como-funciona">Como funciona</a></li>
           <li><a class="rodape__link" href="#sinais">Sinais de manutenção</a></li>
           <li><a class="rodape__link" href="#duvidas">Dúvidas frequentes</a></li>
