@@ -3314,3 +3314,27 @@ body {
     line-height: 1.5;
   }
 }
+
+/* Fotos dos tipos de ar-condicionado nos cartões */
+.tipo__foto {
+  margin: 0 0 3px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #f1f5f8;
+}
+.tipo__foto img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  transition: transform 0.45s var(--ease);
+}
+.tipo:hover .tipo__foto img {
+  transform: scale(1.045);
+}
+@media (max-width: 420px) {
+  .tipo__foto {
+    border-radius: 10px;
+  }
+}
