@@ -18,7 +18,7 @@
   <link rel="preload" href="fonts-inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="img-hero-bg.jpg?v=2" as="image">
   <script>document.documentElement.className = "js";</script>
-  <link rel="stylesheet" href="styles.css?v=47">
+  <link rel="stylesheet" href="styles.css?v=48">
 </head>
 <body>
       <!-- Cabeçalho -->
@@ -379,15 +379,15 @@
         <ul class="calc__regras">
           <li class="calc__regra">
             <span class="calc__regra-num">600</span>
-            <span class="calc__regra-txt"><strong>BTU/h por m²</strong> com pouco ou nenhum sol direto</span>
-          </li>
-          <li class="calc__regra">
-            <span class="calc__regra-num">800</span>
-            <span class="calc__regra-txt"><strong>BTU/h por m²</strong> com sol direto por várias horas</span>
+            <span class="calc__regra-txt"><strong>BTU/h por m²</strong> de área do ambiente</span>
           </li>
           <li class="calc__regra">
             <span class="calc__regra-num">+600</span>
-            <span class="calc__regra-txt"><strong>BTU/h a cada</strong> pessoa extra ou eletrônico ligado junto</span>
+            <span class="calc__regra-txt"><strong>BTU/h a cada</strong> pessoa no ambiente e a cada eletrônico ligado junto</span>
+          </li>
+          <li class="calc__regra">
+            <span class="calc__regra-num">+800</span>
+            <span class="calc__regra-txt"><strong>BTU/h quando</strong> o ambiente pega sol: manhã, tarde ou dia todo</span>
           </li>
         </ul>
         <p class="calc__nota">Janelas entram no resumo enviado ao WhatsApp, mas não somam BTU/h.</p>
@@ -396,14 +396,20 @@
       <div class="calc__card" data-reveal>
         <form class="calc__form" id="calc-form" novalidate>
           <div class="campo campo--largo" id="campo-area">
-            <label class="campo__label" for="calc-area"><span class="campo__num">01</span>Área do ambiente (m²)</label>
+            <label class="campo__label" for="calc-area">
+              <img class="campo__icone" src="img-icone-icone-area.svg" alt="" width="22" height="22">
+              <span class="campo__num">01</span><span class="campo__texto">Área do ambiente (m²)</span>
+            </label>
             <input class="campo__input" id="calc-area" name="area" type="text" inputmode="decimal" placeholder="Ex.: 15,5" autocomplete="off" aria-describedby="calc-area-dica calc-area-erro">
             <p class="campo__dica" id="calc-area-dica">Multiplique a largura pelo comprimento.</p>
             <p class="campo__erro" id="calc-area-erro" role="alert"></p>
           </div>
 
           <div class="campo" id="campo-pessoas">
-            <label class="campo__label" for="calc-pessoas"><span class="campo__num">02</span>Pessoas que costumam ficar no ambiente</label>
+            <label class="campo__label" for="calc-pessoas">
+              <img class="campo__icone" src="img-icone-icone-pessoas.svg" alt="" width="22" height="22">
+              <span class="campo__num">02</span><span class="campo__texto">Pessoas no ambiente</span>
+            </label>
             <div class="stepper">
               <button class="stepper__btn" type="button" data-passo="-1" data-alvo="calc-pessoas" aria-label="Diminuir pessoas">−</button>
               <input class="stepper__input" id="calc-pessoas" name="pessoas" type="number" inputmode="numeric" min="1" step="1" value="1" aria-describedby="calc-pessoas-erro">
@@ -412,18 +418,11 @@
             <p class="campo__erro" id="calc-pessoas-erro" role="alert"></p>
           </div>
 
-          <div class="campo" id="campo-eletronicos">
-            <label class="campo__label" for="calc-eletronicos"><span class="campo__num">03</span>Eletrônicos usados ao mesmo tempo</label>
-            <div class="stepper">
-              <button class="stepper__btn" type="button" data-passo="-1" data-alvo="calc-eletronicos" aria-label="Diminuir eletrônicos">−</button>
-              <input class="stepper__input" id="calc-eletronicos" name="eletronicos" type="number" inputmode="numeric" min="0" step="1" value="0" aria-describedby="calc-eletronicos-erro">
-              <button class="stepper__btn" type="button" data-passo="1" data-alvo="calc-eletronicos" aria-label="Aumentar eletrônicos">+</button>
-            </div>
-            <p class="campo__erro" id="calc-eletronicos-erro" role="alert"></p>
-          </div>
-
           <div class="campo" id="campo-janelas">
-            <label class="campo__label" for="calc-janelas"><span class="campo__num">04</span>Janelas no ambiente</label>
+            <label class="campo__label" for="calc-janelas">
+              <img class="campo__icone" src="img-icone-icone-janelas.svg" alt="" width="22" height="22">
+              <span class="campo__num">03</span><span class="campo__texto">Janelas no ambiente</span>
+            </label>
             <div class="stepper">
               <button class="stepper__btn" type="button" data-passo="-1" data-alvo="calc-janelas" aria-label="Diminuir janelas">−</button>
               <input class="stepper__input" id="calc-janelas" name="janelas" type="number" inputmode="numeric" min="0" step="1" value="0" aria-describedby="calc-janelas-erro">
@@ -432,24 +431,39 @@
             <p class="campo__erro" id="calc-janelas-erro" role="alert"></p>
           </div>
 
-          <fieldset class="campo campo--sol" id="campo-sol">
-            <legend class="campo__label"><span class="campo__num">05</span>Incidência solar</legend>
-            <div class="sol">
-              <label class="sol__opcao">
-                <input type="radio" name="sol" value="pouco">
-                <span>Pouco ou nenhum sol direto</span>
-              </label>
-              <label class="sol__opcao">
-                <input type="radio" name="sol" value="direto">
-                <span>Sol direto por várias horas</span>
-              </label>
+          <div class="campo" id="campo-eletronicos">
+            <label class="campo__label" for="calc-eletronicos">
+              <img class="campo__icone" src="img-icone-icone-eletronicos.svg" alt="" width="22" height="22">
+              <span class="campo__num">04</span><span class="campo__texto">Eletrônicos ligados</span>
+            </label>
+            <div class="stepper">
+              <button class="stepper__btn" type="button" data-passo="-1" data-alvo="calc-eletronicos" aria-label="Diminuir eletrônicos">−</button>
+              <input class="stepper__input" id="calc-eletronicos" name="eletronicos" type="number" inputmode="numeric" min="0" step="1" value="0" aria-describedby="calc-eletronicos-erro">
+              <button class="stepper__btn" type="button" data-passo="1" data-alvo="calc-eletronicos" aria-label="Aumentar eletrônicos">+</button>
+            </div>
+            <p class="campo__erro" id="calc-eletronicos-erro" role="alert"></p>
+          </div>
+
+          <div class="campo campo--select" id="campo-sol">
+            <label class="campo__label" for="calc-sol">
+              <img class="campo__icone" src="img-icone-icone-sol.svg" alt="" width="22" height="22">
+              <span class="campo__num">05</span><span class="campo__texto">Incidência solar</span>
+            </label>
+            <div class="campo__select">
+              <select class="campo__input" id="calc-sol" name="sol" aria-describedby="calc-sol-erro">
+                <option value="" selected>Selecione a incidência</option>
+                <option value="nao-tem">Não tem</option>
+                <option value="manha">Manhã</option>
+                <option value="tarde">Tarde</option>
+                <option value="dia-todo">Dia todo</option>
+              </select>
             </div>
             <p class="campo__erro" id="calc-sol-erro" role="alert"></p>
-          </fieldset>
+          </div>
 
           <div class="calc__acao campo--largo">
             <button class="btn btn--calc" type="submit">
-              <span class="btn__label">Calcular BTUs</span>
+              <span class="btn__label">Calcular potência recomendada</span>
             </button>
           </div>
         </form>
@@ -469,7 +483,7 @@
           </a>
         </div>
 
-        <p class="calc__vazio">Preencha os dados e toque em Calcular BTUs para ver a estimativa e a capacidade sugerida.</p>
+        <p class="calc__vazio">Preencha os dados e toque em Calcular para ver a estimativa e a capacidade sugerida.</p>
       </div>
     </div>
   </section>
@@ -974,8 +988,8 @@
     <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M19.05 4.91A9.82 9.82 0 0 0 12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.91-7.02Zm-7.01 15.24h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.19 8.19 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.41a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.22 8.23Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.79.97-.14.16-.29.18-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.15-1.18-.06-.11-.22-.17-.47-.29Z"/></svg>
   </a>
 
-  <script src="config.js?v=2"></script>
+  <script src="config.js?v=3"></script>
   <script src="app.js?v=17"></script>
-  <script src="calculadora.js?v=1"></script>
+  <script src="calculadora.js?v=2"></script>
 </body>
 </html>

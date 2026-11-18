@@ -1,6 +1,9 @@
 /* ==========================================================================
    R22 Ar Condicionado — Calculadora de BTUs
-   Todo o cálculo acontece no navegador. Os coeficientes ficam em config.js.
+   A conta é a mesma da calculadora da Climatize:
+     área × 600 + pessoas × 600 + eletrônicos × 600 + (sol ? 800 : 0)
+   Janelas aparecem no resumo, mas não somam BTU/h.
+   Os coeficientes e a lista de capacidades ficam em config.js.
    ========================================================================== */
 
 (function () {
@@ -13,13 +16,12 @@
   var whatsapp = config.whatsapp || {};
   var regra = config.btus || {};
 
-  /* Coeficientes (com valores de segurança caso o config não carregue) */
-  var POR_M2 = regra.porMetroQuadrado || {};
-  var COEF_POUCO = numero(POR_M2.pouco, 600);
-  var COEF_DIRETO = numero(POR_M2.direto, 800);
-  var POR_PESSOA_EXTRA = numero(regra.porPessoaExtra, 600);
-  var POR_ELETRONICO = numero(regra.porEletronico, 600);
-  var CAPACIDADES = (regra.capacidades || [7000, 9000, 12000, 18000, 24000, 30000, 36000])
+  var COEF_M2 = numero(regra.porMetroQuadrado, 600);
+  var COEF_PESSOA = numero(regra.porPessoa, 600);
+  var COEF_ELETRONICO = numero(regra.porEletronico, 600);
+  var COEF_JANELA = numero(regra.porJanela, 0);
+  var ADICIONAL_SOL = numero(regra.adicionalSol, 800);
+  var CAPACIDADES = (regra.capacidades || [7000, 9000, 12000, 18000, 22000, 24000, 30000, 36000])
     .map(function (v) {
       return numero(v, 0);
     })
@@ -32,8 +34,9 @@
 
   var campoArea = document.getElementById("calc-area");
   var campoPessoas = document.getElementById("calc-pessoas");
-  var campoEletronicos = document.getElementById("calc-eletronicos");
   var campoJanelas = document.getElementById("calc-janelas");
+  var campoEletronicos = document.getElementById("calc-eletronicos");
+  var campoSol = document.getElementById("calc-sol");
   var resultado = document.getElementById("calc-resultado");
   var saidaBtu = document.getElementById("calc-btu");
   var saidaCap = document.getElementById("calc-cap");
@@ -111,21 +114,8 @@
     });
   });
 
-  /* Estado visual das opções de incidência solar */
-  var opcoesSol = document.querySelectorAll(".sol__opcao");
-  function marcarSol() {
-    Array.prototype.forEach.call(opcoesSol, function (opcao) {
-      var radio = opcao.querySelector("input");
-      opcao.classList.toggle("is-ativa", Boolean(radio && radio.checked));
-    });
-  }
-  Array.prototype.forEach.call(opcoesSol, function (opcao) {
-    var radio = opcao.querySelector("input");
-    if (radio) radio.addEventListener("change", marcarSol);
-  });
-
   /* Normaliza os campos de quantidade ao sair */
-  [campoPessoas, campoEletronicos, campoJanelas].forEach(function (campo) {
+  [campoPessoas, campoJanelas, campoEletronicos].forEach(function (campo) {
     if (!campo) return;
     campo.addEventListener("blur", function () {
       var minimo = parseInt(campo.getAttribute("min"), 10);
@@ -138,6 +128,17 @@
       }
     });
   });
+
+  var ROTULOS_SOL = {
+    "nao-tem": "não tem sol direto",
+    manha: "sol pela manhã",
+    tarde: "sol pela tarde",
+    "dia-todo": "sol o dia todo",
+  };
+
+  function textoDoSol(valor) {
+    return ROTULOS_SOL[valor] || "incidência solar não informada";
+  }
 
   function montarMensagem(dados) {
     var partes = [];
@@ -171,32 +172,36 @@
 
     var area = lerArea(campoArea.value);
     var pessoas = lerInteiro(campoPessoas, 1, "Informe pelo menos 1 pessoa.");
-    var eletronicos = lerInteiro(campoEletronicos, 0, "O número não pode ser negativo.");
     var janelas = lerInteiro(campoJanelas, 0, "O número não pode ser negativo.");
-    var solMarcado = form.querySelector('input[name="sol"]:checked');
+    var eletronicos = lerInteiro(campoEletronicos, 0, "O número não pode ser negativo.");
+    var sol = String(campoSol.value || "");
 
     var temErro = false;
     temErro = erro("calc-area-erro", area.erro) || temErro;
     temErro = erro("calc-pessoas-erro", pessoas.erro) || temErro;
-    temErro = erro("calc-eletronicos-erro", eletronicos.erro) || temErro;
     temErro = erro("calc-janelas-erro", janelas.erro) || temErro;
-    temErro =
-      erro("calc-sol-erro", solMarcado ? "" : "Escolha a incidência solar do ambiente.") || temErro;
+    temErro = erro("calc-eletronicos-erro", eletronicos.erro) || temErro;
+    temErro = erro("calc-sol-erro", sol ? "" : "Escolha a incidência solar do ambiente.") || temErro;
 
     if (temErro) {
       resultado.hidden = true;
-      var primeiroInvalido = form.querySelector(".campo--invalido input");
+      var primeiroInvalido = form.querySelector(".campo--invalido input, .campo--invalido select");
       if (primeiroInvalido) primeiroInvalido.focus();
       return;
     }
 
-    var coef = solMarcado.value === "direto" ? COEF_DIRETO : COEF_POUCO;
+    // Mesma conta da Climatize: sol soma um valor fixo, exceto quando não tem sol.
     var btu =
-      area.valor * coef + (pessoas.valor - 1) * POR_PESSOA_EXTRA + eletronicos.valor * POR_ELETRONICO;
+      area.valor * COEF_M2 +
+      pessoas.valor * COEF_PESSOA +
+      eletronicos.valor * COEF_ELETRONICO +
+      janelas.valor * COEF_JANELA +
+      (sol !== "nao-tem" ? ADICIONAL_SOL : 0);
 
+    // Recomenda a menor capacidade acima da estimativa (como na Climatize).
     var capacidade = null;
     for (var i = 0; i < CAPACIDADES.length; i += 1) {
-      if (CAPACIDADES[i] >= btu) {
+      if (CAPACIDADES[i] > btu) {
         capacidade = CAPACIDADES[i];
         break;
       }
@@ -224,7 +229,7 @@
       pessoas: pessoas.valor,
       eletronicos: eletronicos.valor,
       janelas: janelas.valor,
-      solTexto: solMarcado.value === "direto" ? "sol direto por várias horas" : "pouco sol direto",
+      solTexto: textoDoSol(sol),
       btu: btu,
       capacidade: capacidade,
     };
@@ -239,7 +244,7 @@
   });
 
   /* Limpa o erro do campo assim que a pessoa corrige */
-  [campoArea, campoPessoas, campoEletronicos, campoJanelas].forEach(function (campo) {
+  [campoArea, campoPessoas, campoJanelas, campoEletronicos, campoSol].forEach(function (campo) {
     if (!campo) return;
     campo.addEventListener("input", function () {
       var bloco = campo.closest(".campo");
@@ -251,9 +256,9 @@
     });
   });
 
-  Array.prototype.forEach.call(form.querySelectorAll('input[name="sol"]'), function (radio) {
-    radio.addEventListener("change", function () {
+  if (campoSol) {
+    campoSol.addEventListener("change", function () {
       erro("calc-sol-erro", "");
     });
-  });
+  }
 })();
