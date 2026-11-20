@@ -71,6 +71,7 @@ btus: {
 | Estimativa | `calc-btu` | texto | número com separador de milhar pt-BR |
 | Capacidade | `calc-cap` | texto | “12.000 BTU/h” |
 | Linha da capacidade | `calc-cap-linha` | bloco | escondida quando não há sugestão |
+| Nota da capacidade | `calc-cap-nota` | texto | “Menor capacidade da linha que cobre a estimativa.”, escondida quando não há sugestão |
 | Observação | `calc-obs` | texto | aviso de avaliação técnica |
 | Botão do WhatsApp | `calc-wa` | `<a>` | `href` recriado a cada cálculo |
 
@@ -85,6 +86,21 @@ manha       → Manhã
 tarde       → Tarde
 dia-todo    → Dia todo
 ```
+
+## Estados do resultado
+
+O cartão de resultado tem três estados e o JavaScript é responsável por trocar entre eles:
+
+| Situação | Estimativa | Pílula “Capacidade sugerida” | Nota | Aviso laranja |
+|---|---|---|---|---|
+| Ainda não calculou | cartão inteiro com `hidden` | — | — | — |
+| Estimativa com capacidade na lista | número | visível com o valor | visível | escondido e **com texto limpo** |
+| Estimativa acima de 60.000 BTU/h | número | **escondida e com texto limpo** | escondida | visível |
+
+Duas armadilhas que já causaram bug aqui e não podem voltar:
+
+1. **`hidden` perde para `display` de classe.** A pílula usa `display: inline-flex`; só o atributo `hidden` não a esconde. Por isso o CSS tem a regra global `[hidden] { display: none !important; }` no topo do arquivo. Sem ela, ao passar de 60.000 BTU/h a pílula continuava na tela com o valor do cálculo anterior (ex.: estimativa 67.200 e “capacidade sugerida 9.000 BTU/h” ao mesmo tempo, com o aviso laranja embaixo). Corrigido na versão `styles.css?v=49` / `calculadora.js?v=3`.
+2. **Texto antigo continua no DOM.** Esconder não limpa. Ao não haver sugestão, `calc-cap` recebe string vazia e `calc-obs` também é limpo quando a pílula volta a aparecer.
 
 ## Validações e mensagens
 
@@ -131,8 +147,11 @@ Todos executados no domínio publicado:
 | 20 | 3 | 2 | 1 | tarde | 15.200 | 18.000 |
 | 15,5 | 2 | 0 | 0 | não tem | 10.500 | 12.000 |
 | 60 | 4 | 3 | 2 | — | 40.400 | 48.000 |
+| 105 | 4 | 2 | 2 | dia todo | 67.400 | sem sugestão (aviso) |
 
 Conferência da primeira linha: `15×600 = 9.000` + `2×600 = 1.200` → 10.200, sem adicional de sol. A capacidade é 12.000 porque é a primeira da lista acima de 10.200 (9.000 não serve).
+
+Teste de transição, na mesma sessão e sem recarregar a página: 15/2/0/0 sem sol → pílula 12.000 visível; 105/4/2/2 dia todo → pílula escondida, texto da pílula vazio, aviso laranja visível; voltar para 15/2/0/0 manhã → pílula 12.000 de novo, sem resto do estado anterior.
 
 ## Ícones
 

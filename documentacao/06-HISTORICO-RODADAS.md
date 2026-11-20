@@ -86,3 +86,15 @@ O cliente pediu mais branco no site. As seções de conteúdo passaram a ser car
 - Confirmar o que entra exatamente no serviço de manutenção.
 - Confirmar se as marcas são parceiras oficiais ou apenas marcas com as quais a empresa trabalha.
 - Não há endereço, horário de funcionamento nem e-mail no site — se o cliente quiser, é conteúdo novo a incluir.
+
+## Rodada 12 — pacote completo para download
+
+O cliente pediu um pacote para guardar e para outra IA reproduzir o projeto. Foram montadas as pastas `site/`, `site-github-pages/`, `documentos/`, `capturas/` e `originais/`, com oito documentos técnicos, capturas do site, um vídeo de navegação e o ZIP final.
+
+## Rodada 13 — capacidade sugerida presa na tela
+
+O cliente reparou que, ao simular um ambiente grande (estimativa 67.200 BTU/h), o cartão mostrava **ao mesmo tempo** “Capacidade sugerida 9.000 BTU/h” e o aviso de que a estimativa passava de 60.000 BTU/h. Era um bug real, não só estética.
+
+Causa: a pílula da capacidade tem `display: inline-flex` na classe `.calc__res-cap`, e o `display` da classe vence o `[hidden]` do navegador. Resultado: ela continuava visível com o valor do cálculo anterior, porque o JavaScript só escondia via atributo e nunca limpava o texto.
+
+Correção: regra global `[hidden] { display: none !important; }` no topo do `styles.css`; `calculadora.js` passou a limpar `calc-cap` e `calc-obs` na troca de estado; e entrou uma nota discreta embaixo da pílula (“Menor capacidade da linha que cobre a estimativa.”) para deixar claro por que 15.200 BTU/h viram 18.000. Versões novas: `styles.css?v=49` e `calculadora.js?v=3`. Publicado no Manus (deploy 70404607) e no GitHub Pages (commit 4b05149).
