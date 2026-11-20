@@ -29,6 +29,11 @@
   box-sizing: border-box;
 }
 
+/* O atributo hidden precisa vencer qualquer display definido nas classes */
+[hidden] {
+  display: none !important;
+}
+
 html {
   -webkit-text-size-adjust: 100%;
 }
@@ -3759,6 +3764,13 @@ select.campo__input option {
 .calc__res-cap strong {
   color: #fff;
   font-weight: 800;
+}
+
+.calc__res-nota {
+  margin: 8px 0 0;
+  color: rgba(234, 243, 248, 0.5);
+  font-size: 12px;
+  line-height: 1.4;
 }
 
 .calc__res-obs {

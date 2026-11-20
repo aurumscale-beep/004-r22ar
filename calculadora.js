@@ -41,6 +41,7 @@
   var saidaBtu = document.getElementById("calc-btu");
   var saidaCap = document.getElementById("calc-cap");
   var linhaCap = document.getElementById("calc-cap-linha");
+  var notaCap = document.getElementById("calc-cap-nota");
   var saidaObs = document.getElementById("calc-obs");
   var botaoWhats = document.getElementById("calc-wa");
 
@@ -214,9 +215,13 @@
     if (capacidade) {
       saidaCap.textContent = formatar(capacidade) + " BTU/h";
       linhaCap.hidden = false;
+      if (notaCap) notaCap.hidden = false;
       saidaObs.hidden = true;
+      saidaObs.textContent = "";
     } else {
       linhaCap.hidden = true;
+      saidaCap.textContent = "";
+      if (notaCap) notaCap.hidden = true;
       saidaObs.hidden = false;
       saidaObs.textContent =
         "Acima da maior capacidade da lista (" +
